@@ -1,0 +1,78 @@
+Website Error Response Guideline
+
+Project: Girly Pop Error and Search Response System
+Goal: Auto-detect search themes and trigger playful TikTok/girly pop responses, especially around delulu, girl dinner, pop culture, etc.
+
+⸻
+
+1. General Error Message Pool
+
+(Randomly pick from this pool when no search keyword triggers a specific response)
+	•	“It’s giving delulu… this isn’t real, bestie.”
+	•	“Manifest harder, queen. This page doesn’t exist yet.”
+	•	“Stay delulu, stay winning — but maybe search again?”
+	•	“Not us both being in our delulu era over this page.”
+	•	“Uh-oh, bestie, we’re in our flop era.”
+	•	“Not the website giving ick… try again!”
+	•	“We fumbled the bag. Try again, queen.”
+	•	“It’s giving… error vibes.”
+
+⸻
+
+2. Keyword-Based Blurb Responses
+
+Logic: If the search contains certain words (see categories below), trigger a specific blurb.
+
+A. Food Keywords
+
+(If search includes: candy, chocolate, snack, pizza, burger, fries, cake, Reese’s, etc.)
+Response Pool:
+	•	“Girl dinner secured.”
+	•	“Serving girl dinner realness.”
+	•	“This meal plan? Approved by ✨TikTok nutritionists✨.”
+	•	“Mmm… girl math says calories don’t count if it’s after 8PM.”
+	•	“Not a balanced meal, but it’s the right meal.”
+
+B. Celebrity / Pop Culture Keywords
+
+(If search includes: Taylor Swift, Beyoncé, Kardashians, Harry Styles, etc.)
+Response Pool:
+	•	“Certified Swiftie behavior detected.”
+	•	“If loving [search term] is wrong, we don’t wanna be right.”
+	•	“This search is giving main character energy.”
+
+C. Chaotic / Weird Searches
+
+(If search is weird, random, or contains odd words)
+Response Pool:
+	•	“POV: you’re in your hyperfixation era.”
+	•	“This is giving late-night TikTok rabbit hole.”
+	•	“Certified ✨cringe but free✨ moment.”
+
+D. Fitness or Gym Keywords
+
+(If search includes: gym, workout, fitness, hot girl walk, etc.)
+Response Pool:
+	•	“She’s in her hot girl walk era.”
+	•	“Main character gains incoming.”
+
+E. Sad or Emo Vibes
+
+(If search includes: sad, emo, crying, heartbreak, breakup, My Chemical Romance, etc.)
+Response Pool:
+	•	“This search smells like a 2014 Tumblr comeback.”
+	•	“Crying in the club, but make it iconic.”
+
+F. Misspellings / Gibberish Detection
+
+(If search term appears nonsensical or misspelled words detected)
+Response Pool:
+	•	“You tried, and that’s all that matters, bestie.”
+	•	“Spelling is fake anyway.”
+	•	“Delulu is the solulu. Try again, angel.”
+
+⸻
+
+3. Default Response
+
+If no keywords match and no errors are found, fallback to a random pick from the General Error Message Pool (see Section 1).

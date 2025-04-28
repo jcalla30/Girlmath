@@ -1,0 +1,90 @@
+import streamlit as st
+import requests
+import matplotlib.pyplot as plt
+import keepa
+from bs4 import BeautifulSoup
+import re
+
+# ---- Settings ----
+KEEPA_API_KEY = 'YOUR_KEEPA_API_KEY'
+
+# ---- Helper Functions ----
+def extract_asin(amazon_url):
+    match = re.search(r'/dp/(\w{10})', amazon_url)
+    if match:
+        return match.group(1)
+    else:
+        return None
+
+def get_price_history(asin):
+    api = keepa.Keepa(KEEPA_API_KEY)
+    products = api.query(asin, domain='US')
+    product = products[0]
+    prices = product['data']['NEW']
+    # Price data is every ~hour
+    return prices
+
+def plot_price_history(prices):
+    times = list(range(len(prices)))
+    plt.figure(figsize=(10,5))
+    plt.plot(times, [p/100 for p in prices if p is not None], label='Amazon Price')
+    plt.xlabel('Time (hours)')
+    plt.ylabel('Price (USD)')
+    plt.title('Amazon Price History')
+    plt.legend()
+    st.pyplot(plt)
+
+def search_walmart(item_title):
+    query = item_title.replace(' ', '+')
+    url = f"https://www.walmart.com/search?q={query}"
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    prices = soup.find_all('span', {'class': 'price-group'})
+    if prices:
+        return prices[0].text
+    return None
+
+def girl_math_logic(current_price, peak_price, lowest_price):
+    savings_from_peak = peak_price - current_price
+    savings_percentage = (savings_from_peak / peak_price) * 100
+    return savings_from_peak, savings_percentage
+
+# ---- Streamlit App ----
+st.title("Girl Math Deal Finder")
+
+amazon_url = st.text_input("Paste an Amazon Product Link:")
+
+if amazon_url:
+    asin = extract_asin(amazon_url)
+    if asin:
+        st.success(f"ASIN: {asin}")
+        try:
+            prices = get_price_history(asin)
+            plot_price_history(prices)
+
+            # Get peak and low
+            valid_prices = [p/100 for p in prices if p]
+            peak_price = max(valid_prices)
+            lowest_price = min(valid_prices)
+            current_price = valid_prices[-1]
+
+            st.write(f"Current Amazon Price: ${current_price:.2f}")
+            st.write(f"Peak Price: ${peak_price:.2f}")
+            st.write(f"Lowest Price: ${lowest_price:.2f}")
+
+            # Walmart check
+            item_title = "placeholder name"  # We can actually grab the real title from Amazon if you want
+            walmart_price = search_walmart(item_title)
+            if walmart_price:
+                st.write(f"Walmart Price: {walmart_price}")
+
+            # Girl math
+            savings, percent = girl_math_logic(current_price, peak_price, lowest_price)
+            st.success(f"Girl math says you're saving ${savings:.2f} ({percent:.1f}% off peak price!)")
+        
+        except Exception as e:
+            st.error(f"Error fetching data: {e}")
+
+    else:
+        st.error("Couldn't find ASIN. Please check the link.")
